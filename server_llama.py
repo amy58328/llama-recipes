@@ -23,38 +23,7 @@ async def sentence_split(info:dict):
     print(info['command'])
     command = info['command']
 
-    result = ""
-    if (" toy " in command):
-        time.sleep(1)
-        print("toy")
-        result =  "yes"
-    elif (" bin " in command):
-        time.sleep(1)
-        print("toy")
-        result =  "yes"
-    elif (" box " in command):
-        time.sleep(1)
-        print("toy")
-        result =  "yes"
-    elif (" divided " in command):
-        print("quotient")
-        time.sleep(1)
-        result =  "no"
-    elif (" Germany " in command):
-        time.sleep(1)
-        print("Germany")
 
-        result =  "yes"
-    elif (" different " in command):
-        time.sleep(1)
-        print("different")
-        result =  "no"
-    elif (" person " in command) :
-        time.sleep(1)
-        print("person")
-        result =  "no"
-    else:
-        print("else")
     # eval_prompt = f"""
     # what is the verbs, direct objects, and indirect objects of this sentence:
     # {command}
@@ -62,14 +31,14 @@ async def sentence_split(info:dict):
     # [verb,[direct objects],indirect object]
     # """
 
-        model_input = tokenizer(command, return_tensors="pt").to("cuda")
+    model_input = tokenizer(command, return_tensors="pt").to("cuda")
 
-        
-        with torch.no_grad():
-            result = tokenizer.decode(model.generate(**model_input, max_new_tokens=50)[0], skip_special_tokens=True)
-        
-        result = result.split("\n")[-1].strip()
     
+    with torch.no_grad():
+        result = tokenizer.decode(model.generate(**model_input, max_new_tokens=50)[0], skip_special_tokens=True)
+    
+    result = result.split("\n")[-1].strip()
+
     print(result)
     return result
 
